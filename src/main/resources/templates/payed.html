@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Success</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Payment Success</h2>
+  <p>Thank you for your purchase. Here are the details of your transaction:</p>
+
+  <h4>Products</h4>
+  <ul>
+    <li th:each="productName : ${productNames}">
+      <span th:text="${productName}"></span>
+    </li>
+  </ul>
+
+  <h4>Total Paid</h4>
+  <p th:text="${total} + ' USD'"></p>
+
+  <a href="/" class="btn btn-primary">Continue Shopping</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

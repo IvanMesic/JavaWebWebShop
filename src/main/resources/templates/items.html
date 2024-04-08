@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Item List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .admin-action {
+            display: none;
+        }
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="layout :: navbarFragment"></div>
+<h1 class="my-4 text-center">Item List</h1>
+
+<div class="container">
+    <div class="row">
+        <div th:each="item : ${items}" class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img th:src="@{${item.url}}" alt="Item Image" class="card-img-top" >
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${item.name}"></h5>
+                    <p class="card-text" th:text="${item.description}"></p>
+                    <p class="card-text">$<span th:text="${item.price}"></span></p>
+                </div>
+                <div class="card-footer">
+                    <form th:action="@{/itemController/addItemToCart}" method="post">
+                        <input type="hidden" name="itemId" th:value="${item.id}" />
+                        <input type="hidden" name="name" th:value="${item.getName()}" />
+                        <input type="number" name="quantity" value="1" min="1" style="width: 60px;" />
+                        <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+                        <a th:href="@{/itemController/items/details/{id}(id = ${item.id})}" class="btn btn-secondary btn-sm">Details</a>
+                        <a th:href="@{/itemController/edit/{id}(id=${item.id})}" class="btn btn-primary btn-sm admin-action">Edit</a>
+                        <a th:href="@{/itemController/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm admin-action" onclick="return confirm('Are you sure?')">Delete</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:replace="layout::scriptsFragment"></script>
+</body>
+</html>

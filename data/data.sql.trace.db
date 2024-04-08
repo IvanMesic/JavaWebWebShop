@@ -1,0 +1,6 @@
+2024-03-02 01:41:15.279915+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO transactionitem (TransactionId, ItemId, Quantity) VALUES (1, 1, 1), (1, 2, 1), [*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO transactionitem (TransactionId, ItemId, Quantity) VALUES (1, 1, 1), (1, 2, 1),  [42001-224]
+2024-03-02 01:43:27.171709+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO transactionitem (TransactionId, ItemId, Quantity) VALUES (1, 1, 1), (1, 2, 1), [*]"; expected "ROW (, (, DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO transactionitem (TransactionId, ItemId, Quantity) VALUES (1, 1, 1), (1, 2, 1),  [42001-224]

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout :: headFragment('Category List')"></th:block>
+</head>
+<body>
+
+<th:block th:replace="layout :: navbarFragment"></th:block>
+
+<div class="container mt-5">
+    <h2>Categories</h2>
+    <div>
+        <a th:href="@{/categoryController/add}" class="btn btn-primary mb-3">Add New Category</a>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.name}"></td>
+                <td th:text="${category.description}"></td>
+                <td>
+                    <a th:href="@{/categoryController/edit/{id}(id=${category.id})}" class="btn btn-sm btn-secondary admin-action">Edit</a>
+                    <a th:href="@{/categoryController/delete/{id}(id=${category.id})}" th:onclick="'return confirm(\'Are you sure you want to delete this category?\');'" class="btn btn-sm btn-danger admin-action">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<th:block th:replace="layout :: scriptsFragment"></th:block>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<th:block th:fragment="headFragment(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}">Webshop</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</th:block>
+
+<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/" th:href="@{/}">My Epic Webshop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/categories" th:href="@{/categoryController/categories}">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/itemController/items" th:href="@{/itemController/items}">Items</a>
+            </li>
+            <li class="nav-item admin-action" id="addItems" >
+                <a class="nav-link" href="/itemController/addItem" th:href="@{/itemController/addItem}">Add Items</a>
+            </li>
+            <li class="nav-item admin-action" id="addCategories" >
+                <a class="nav-link" href="/categories/add" th:href="@{/categoryController/add}">Add Categories</a>
+            </li>
+            <li class="nav-item" id="transactions"   style="display: none">
+                <a class="nav-link" href="/transactionController/getTransactions/add" th:href="@{/transactionController/getTransactions}">Transactions</a>
+            </li>
+            <li class="nav-item" id="logs"  style="display: none" >
+                <a class="nav-link" href="/logController/logs" th:href="@{/logController/logs}">Logs</a>
+            </li>
+        </ul>
+        <form class="form-inline">
+            <a class="nav-link login" id="login" href="/login" th:href="@{/login}">Login</a>
+            <a class="nav-link logout" id="logout" href="/login" style="display: none" th:href="@{/logout}">Logout</a>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/cart/showCart" th:href="@{/cart/showCart}" id="cartButton">Cart</a>
+            <span class="navbar-text" id="userName" style="display: none;"></span>
+        </form>
+    </div>
+</nav>
+
+<footer th:fragment="footerFragment">
+
+</footer>
+
+<th:block th:fragment="scriptsFragment">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/userRoleController/userInfo')
+                .then(response => response.json())
+                .then(data => {
+                    const { username, role } = data;
+
+                    if (role !== 'GUEST') {
+                        document.getElementById('userName').textContent = username;
+                        document.getElementById('userName').style.display = 'inline-block';
+                        document.getElementById('login').style.display = 'none';
+                        document.getElementById('logout').style.display = 'inline-block';
+                        document.getElementById('transactions').style.display = 'inline-block';
+                    } else {
+                        document.getElementById('login').style.display = 'inline-block';
+                        document.getElementById('userName').style.display = 'none';
+                        document.getElementById('transactions').style.display = 'none';
+                        document.getElementById('logs').style.display = 'none';
+                    }
+
+                    if (role === 'ADMIN') {
+                        document.getElementById('logs').style.display = 'inline-block';
+                        document.getElementById('addItems').style.display = 'inline-block';
+                        document.getElementById('addCategories').style.display = 'inline-block';
+                        document.querySelectorAll('.admin-action').forEach(button => button.style.display = 'inline-block');
+                    } else if (role === 'USER') {
+                        document.getElementById('addItems').style.display = 'none';
+                        document.getElementById('addCategories').style.display = 'none';
+                        document.querySelectorAll('.admin-action').forEach(button => button.style.display = 'none');
+                        document.getElementById('search').style.display = 'none';
+                    }
+
+                    if (role === 'GUEST') {
+                        document.getElementById('cartButton').style.display = 'inline-block';
+                        document.getElementById('login').style.display = 'inline-block';
+                        document.querySelectorAll('.admin-action').forEach(button => button.style.display = 'none');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</th:block>

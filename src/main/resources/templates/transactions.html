@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <th:block th:replace="layout :: headFragment('Transactions')"></th:block>
+</head>
+<body>
+
+<th:block th:replace="layout :: navbarFragment"></th:block>
+
+<div class="container mt-5">
+    <h2>Transactions</h2>
+
+    <div class="row mb-4">
+        <div class="col">
+            <form th:action="@{/transactionController/search}"  method="get" class="form-inline" >
+                <div class="form-group mr-3 search"   >
+                    <label for="search" class="sr-only">User</label>
+                    <input type="text" class="form-control" id="search" name="user" placeholder="User">
+                </div>
+                <div class="form-group mr-3">
+                    <label for="dateInput" class="sr-only">Date</label>
+                    <input type="date" class="form-control " id="dateInput" name="date">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Transaction ID</th>
+            <th>User</th>
+            <th>Purchase Date</th>
+            <th>Items</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${items}">
+            <td th:text="${transaction.id}"></td>
+            <td th:text="${transaction.user.name}"></td>
+            <td th:text="${#dates.format(transaction.purchaseDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+                <ul>
+                    <li th:each="item : ${transaction.items}" th:text="${item.item.name} + ' - Qty: ' + ${item.quantity}"></li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<th:block th:replace="layout :: footerFragment"></th:block>
+<th:block th:replace="layout :: scriptsFragment"></th:block>
+<script>
+
+</script>
+</body>
+</html>

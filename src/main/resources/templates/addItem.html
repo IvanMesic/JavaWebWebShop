@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <th:block th:replace="layout :: headFragment('Add Item')"></th:block>
+</head>
+<body>
+
+<th:block th:replace="layout :: navbarFragment"></th:block>
+
+<div class="container mt-4">
+    <h2>Add Item</h2>
+    <form th:action="@{/itemController/addItem}" method="post" id="addItemForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="url">Image Url:</label>
+            <textarea id="url" name="url" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select id="category" name="categoryId" class="form-control" required>
+                <option value="">Select a Category</option>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category Name</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Item</button>
+    </form>
+</div>
+
+<th:block th:replace="layout :: footerFragment"></th:block>
+<th:block th:replace="layout :: scriptsFragment"></th:block>
+</body>
+</html>

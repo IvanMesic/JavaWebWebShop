@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .item-image {
+            max-width: 70%;
+            max-height: 400px;
+            min-width: 100px;
+            min-height: 100px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Item Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${item.name}">Item Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="'$' + ${item.price}">Item Price</h6>
+            <p class="card-text" th:text="${item.description}">Description</p>
+            <div class="card-text">
+                <strong>Image:</strong>
+                <div>
+                    <img th:src="@{${item.url}}" alt="Item Image" class="img-fluid item-image">
+                </div>
+            </div>
+            <form th:action="@{/itemController/addItemToCart}" method="post">
+                <input type="hidden" name="itemId" th:value="${item.id}" />
+                <input type="hidden" name="name" th:value="${item.getName()}" />
+                <input type="number" name="quantity" value="1" min="1" style="width: 60px;" />
+                <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+                <a th:href="@{/itemController/items/details/{id}(id = ${item.id})}" class="btn btn-secondary btn-sm">Details</a>
+                <a th:href="@{/itemController/edit/{id}(id=${item.id})}" class="btn btn-primary btn-sm admin-action">Edit</a>
+                <a th:href="@{/itemController/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm admin-action" onclick="return confirm('Are you sure?')">Delete</a>
+                <a href="#" th:href="@{/itemController/items}" class="card-link">Back to list</a>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
